@@ -35,7 +35,7 @@ app.post("/send", async (req, res) => {
   res.send(result.sid);
 });
 
-http.createServer(app).listen(3001, () => {
+http.createServer(app).listen(process.env.PORT, () => {
   console.log("Express server listening on port 3001");
 });
 /*
