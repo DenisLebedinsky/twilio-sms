@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		body {
+			background-color: darkblue;
+			color: white;
+		}
+
+		.block {
+			padding: 20px;
+			text-align:center;
+		}
+		#phone{
+			margin: 10px 0;
+			width: 300px;
+			border-radius: 5px;
+		}
+		#text{
+				margin: 10px 0;
+			border-radius: 5px;
+			width: 300px;
+			height: 100px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="block">
+		<h1>The sender messager to phone number</h1>
+		<form  id="custom-form">
+			<span>Phone</span>
+			<br />
+			<input id="phone" type="number">
+			<br />
+			<span>Text</span>
+				<br />
+			<textarea id="text" type="text"></textarea>
+				<br />
+			<button type="submit">Submit</button>
+		</form>
+	</div>
+	<script>
+	
+	window.onload = function () {
+			var phone = document.getElementById('phone')
+			var form = document.getElementById('custom-form');
+			form.onsubmit = function submitForm(event) {
+				event.preventDefault();
+				
+				var text = document.getElementById('text')
+				if (text === '') {
+					alert('Enter message text')
+					return null;
+				}
+				var phoneNumber = parseInt(phone.value.replace(/[^\d]/g, ''))
+				var url = '/send';
+				fetch(url, {
+					method: 'POST', body: JSON.stringify({ text: text.value, phone: '+'+phoneNumber }),
+					headers: { 'content-type': 'application/json' }
+				})
+					.then(function (response) {
+						alert('MSG sent to server');
+					})
+					.catch(function () {
+						alert('Error! Please try again later');
+					})
+			}
+		}
+		
+		</script>
+</body>
+
+</html>
