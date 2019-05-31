@@ -14,45 +14,71 @@
 
 		.block {
 			padding: 20px;
-			text-align:center;
+			text-align: center;
 		}
-		#phone{
+
+	.block2 {
+			padding: 20px;
+			text-align: center;
+		}
+		#phone {
 			margin: 10px 0;
 			width: 300px;
 			border-radius: 5px;
 		}
-		#text{
-				margin: 10px 0;
+
+		#text {
+			margin: 10px 0;
 			border-radius: 5px;
 			width: 300px;
 			height: 100px;
+		}
+
+		#number {
+			margin: 10px 0;
+			width: 300px;
+			border-radius: 5px;
 		}
 	</style>
 </head>
 
 <body>
 	<div class="block">
-		<h1>The sender messager to phone number</h1>
-		<form  id="custom-form">
+		<h2>The sender messager to phone number</h2>
+		<form id="custom-form">
 			<span>Phone</span>
 			<br />
 			<input id="phone" type="number">
 			<br />
 			<span>Text</span>
-				<br />
+			<br />
 			<textarea id="text" type="text"></textarea>
-				<br />
+			<br />
 			<button type="submit">Submit</button>
 		</form>
 	</div>
+<hr>
+	<div class="block2">
+		<h2>Create Host Number Order</h2>
+		<form id="custom-form2">
+			<span>Phone</span>
+			<br />
+			<input id="number" type="number">
+			<br />
+			<button type="submit">Create</button>
+		</form>
+	</div>
 	<script>
-	
-	window.onload = function () {
-			var phone = document.getElementById('phone')
-			var form = document.getElementById('custom-form');
+
+		window.onload = function () {
+			let phone = document.getElementById('phone');
+			let form = document.getElementById('custom-form');
+			let formAddNumber = document.getElementById('custom-form2');
+			let number = document.getElementById('number');
+
 			form.onsubmit = function submitForm(event) {
 				event.preventDefault();
-				
+debugger
 				var text = document.getElementById('text')
 				if (text === '') {
 					alert('Enter message text')
@@ -61,7 +87,7 @@
 				var phoneNumber = parseInt(phone.value.replace(/[^\d]/g, ''))
 				var url = '/send';
 				fetch(url, {
-					method: 'POST', body: JSON.stringify({ text: text.value, phone: '+'+phoneNumber }),
+					method: 'POST', body: JSON.stringify({ text: text.value, phone: '+' + phoneNumber }),
 					headers: { 'content-type': 'application/json' }
 				})
 					.then(function (response) {
@@ -71,9 +97,27 @@
 						alert('Error! Please try again later');
 					})
 			}
+
+
+			formAddNumber.onsubmit = function submitForm(event) {
+				event.preventDefault();
+				debugger
+				var phoneNum = parseInt(number.value.replace(/[^\d]/g, ''))
+				var url = '/addNumber';
+				fetch(url, {
+					method: 'POST', body: JSON.stringify({ number: phoneNum }),
+					headers: { 'content-type': 'application/json' }
+				})
+					.then(function (response) {
+						alert('Number sent to server');
+					})
+					.catch(function () {
+						alert('Error! Please try again later');
+					})
+			}
 		}
-		
-		</script>
+
+	</script>
 </body>
 
 </html>

@@ -35,9 +35,14 @@ app.post("/send", async (req, res) => {
   res.send(result.sid);
 });
 
+app.post("/addNumber", async (req, res) => {
+  if (!req.body.number) res.send("Error number is undefined");
+  const hosted_number_order = await client.preview.hosted_numbers
+    .hostedNumberOrders(req.body.number)
+   // .fetch();
+  res.send(hosted_number_order.friendlyName);
+});
+
 http.createServer(app).listen(process.env.PORT, () => {
   console.log("Express server listening on port 3001");
 });
-/*
-
-*/
